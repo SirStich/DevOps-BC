@@ -4,6 +4,8 @@
 - [CLI Commands](#cli)
 - [Package Manager](#manager)
 - [Vim Editor](#vim)
+- [Linux Accounts & Groups - Users Management](#users)
+- [Linux Accounts & Groups - Users Permission](#users-permission-2)
 
 
 
@@ -171,6 +173,8 @@ Everything in Linux is a file, if it is a document, pictures, directories, comma
   - `lsmem` for memory
 - change user
   - `su - [username]` example `su - admin`
+- logout current user
+  - `exit` 
 ### Superuser
 - add user
   - `sudo adduser [name]`
@@ -196,8 +200,77 @@ We should use `APT` and **not** `APT-GET`
 # Vim Editor<a id="vim"></a>
 ### Install Vim
 We use the cli for this `sudo apt install vim`
+### Vim CLI Commands
+- create new file and use vim editor
+  - `vim config.yaml` if the file does not exist, it will create it as well.
+
 ### Normal Mode `n`
+- delete entire line `dd`
+- delete next lines below `d[number]`
+- undo changes `u`
+- jump to end of line `A` or `$`
+- jump to start of line `I` or `0`
 ### Command Mode `:[command]`
 - write file and quit vim `:wq`
+- jump to line `[lineNumber]G`
+- Search `/[pattern]` example `/nginx`
+- jump to next occurrence `n`
+- replace old string with new string `:%s/old/new`
+
 ### Insert Mode `i`
 
+
+---
+# Linux Accounts & Groups <a id="users"></a>
+### Users Management
+stores user account information:
+- `/etc/passwd` everyone can read it, but only the root user can change the file.
+  - `cat /etc/passwd` this prints out a list of all users on the system.
+```
+sirstich:x:1000:1000:bernhard:/home/sirstich:/bin/bash
+USERNAME : PASSWORD : UID : GID : GECOS : HOMEDIR : SHELL 
+```
+Username - Used when user logs in  
+Password - `x` means, that encrypted password is stored in `/etc/shadow file`  
+User ID (UID) - each user has a unique ID, UID 0 is reserved for root.  
+Group ID (GID) - the primary group ID (stored in `/etc/group file`)  
+User ID Info - Comment field for extra information about users
+GECOS - a commented field about the user
+HOMEDIR - Absolute path of users home dir
+Shell - Absolute Path of a shell
+### Manage Users from CLI
+- add user
+  - `sudo adduser [username]`
+- change users password
+  - `sudo passwd [username]`
+- switch user
+  - `su - [username]`
+- switch to root user
+  - `su -`
+- remove user
+  - `deluser [username]`
+- create new group
+  - `groupadd devops`
+    - to print out our groups we can use `cat /etc/group`
+- change primary group of a user
+  - `sudo usermod -g [groupname] [username]` example `sudo usermod -g devops tom`
+- overwrite subgroups to user
+  - `sudo usermod -G [groupname1, groupname2] [username]` example `sudo usermod -G admin,othergroup tom` (Note that the `-G` will overwrite the existing group list.)
+- add subgroups to user
+  - `sudo usermod -aG [groupname] [username]` example `sudo usermod -aG newgroup tom` (Note: This will **append** this group to the user.)
+- remove user from group
+  - `sudo gpasswd -d [username] [groupname]`
+- print out the groups for the current logged-in user
+  - `groups`
+- print out the groups for any user
+  - `groups [username]`
+### Manage Users from Scripts
+When we want to have automation, we should use the commands suffixed by `add`.  
+
+Commands:
+- `useradd`
+- `groupadd`
+- `userdel`
+- `groupdel`
+### User Permissions <a id="users-permission-2"></a>
+Ownership & File Permissions
