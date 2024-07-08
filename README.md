@@ -2,6 +2,8 @@
 ## ToC
 - [Linux vs. Microsoft Filesystem](#os)  
 - [CLI Commands](#cli)
+- [Package Manager](#manager)
+- [Vim Editor](#vim)
 
 
 
@@ -160,9 +162,42 @@ Everything in Linux is a file, if it is a document, pictures, directories, comma
   - `CTRL + c`
 - copy and paste into terminal
   - `CTRL + SHIFT + V` paste copied text into terminal
+- get kernel info, os version
+  - `uname -a`
+- get os release file info
+  - `cat /etc/os-release`
+- get information about installed hardware
+  - `lscpu` for cpu
+  - `lsmem` for memory
+- change user
+  - `su - [username]` example `su - admin`
+### Superuser
+- add user
+  - `sudo adduser [name]`
+- add group
+  - `1 sudo addgroup devops`
+---
 
-
-weiter bei 22:39 / 6
+# Package Manager <a id="manager"></a>
+There are two common ways to install software in linux.
+### Using APT
+We should use `APT` and **not** `APT-GET`
+#### Apt Commands
+- search for package
+  - `apt search [packagename]` example `apt search openjdk`
+- install package
+  - `sudo apt install [packagename]`
+- remove package
+  - `apt remove [packagename]`
+### Using Snap
 
 ---
+
+# Vim Editor<a id="vim"></a>
+### Install Vim
+We use the cli for this `sudo apt install vim`
+### Normal Mode `n`
+### Command Mode `:[command]`
+- write file and quit vim `:wq`
+### Insert Mode `i`
 
