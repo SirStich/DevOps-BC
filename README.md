@@ -6,6 +6,10 @@
 - [Vim Editor](#vim)
 - [Linux Accounts & Groups - Users Management](#users)
 - [Linux Accounts & Groups - Users Permission](#users-permission-2)
+  - [Ownership](#lx-owner)
+  - Permissions
+    - [with Symbols](#lx-permission-sb)
+    - [with octal numbers](#lx-permission-num) (preferred way)
 
 
 
@@ -273,7 +277,7 @@ Commands:
 - `userdel`
 - `groupdel`
 ## User Permissions <a id="users-permission-2"></a>
-### Ownership & File Permissions
+### Ownership <a id="lx-owner"></a>
 - print files in a long listing format to see all information
   - `ls -l` this will give as an output `-rw-r--r--  1 bernhard  staff    790 Jul  9 18:08 README.md`
     - explanation for output:
@@ -312,7 +316,7 @@ drwxr-xr-x  3 bernhard  staff     96 Jul  9 18:08 migrations
 #### No Permission
 `-` no permission is represented as a dash  
 
-### Modify Permissions
+### Modify Permissions <a id="lx-permission-sb"></a>
 For this we use the `chmod` command.
 #### User, Owner or Other targeting flags (target-flag)
 ```shell
@@ -331,16 +335,32 @@ chomd [target-flag][operator][permission-flag] [filename]
 u-r # remove read permission
 g+w # add group permission (primary group)
 o-x # remove execute permission for others
+
+
+# or we can use multiple selection
+sudo chmod a=r-- filename # a is for all affected
+# only for group
+sudo chmod g=rw- filename # g is for group and we add write and read
+# only for user
+sudo chmod u=rw- filename # g is for group and we add write and read
 ```
-#### Shorthand for permission
-using value:
+#### Shorthand for permission - using octal numbers <a id="lx-permission-num"></a>
+using octal number:
+- `0` no permission
 - `1` execute permission
 - `2` write permission
 - `4` read permission
-- `7` all permissions
+- `7` all permissions  
+Example: **Read** and **Write** for **User** (4 + 2 = 6), read for group and other (4)
+  - `chmod 644 filename.txt`
 ```shell
+# first run 
+ls -l # to see the current permissions
+# for hidden files we use `ls -la`
 chomd 777 [filename]
-# full example `chmod u+w filename`
+# full example `chmod 777 filename.txt`
+chmod 775 # all permissions for user, read and execute for group and other.
+chmod 644 # read and write for user, read for group and other
 
 u-r # remove read permission
 g+w # add group permission (primary group)
