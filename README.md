@@ -291,6 +291,60 @@ We can see the current permissions when we run `ls -l`, this will give us the li
 # output like this when we ran `ls -l`
 drwxr-xr-x  3 bernhard  staff     96 Jul  9 18:08 migrations
 ```
+![img.png](img.png)  
+#### First Character is for File Type⤴️
+`-` means regular file  
+`d` means directory  
+`c` means character device file  
+`l` means symbolic link  
+#### Second Block (green) is for user
+`r` readonly access  
+`w` write access  
+`x` execute access  
+#### Third Block (red) is for group
+`r` readonly access  
+`w` write access  
+`x` execute access  
+#### Fourth Block (blue) is for other
+`r` readonly access  
+`w` write access  
+`x` execute access  
+#### No Permission
+`-` no permission is represented as a dash  
+
+### Modify Permissions
 For this we use the `chmod` command.
+#### User, Owner or Other targeting flags (target-flag)
+```shell
+u- # user
+g- # group
+o- # other
+```
+#### Read, Write or Execute Permission flags (permission-flag)
+operator: 
+- `-` to remove permission
+- `+` to add permission
+```shell
+chomd [target-flag][operator][permission-flag] [filename]
+# full example `chmod u+w filename`
+
+u-r # remove read permission
+g+w # add group permission (primary group)
+o-x # remove execute permission for others
+```
+#### Shorthand for permission
+using value:
+- `1` execute permission
+- `2` write permission
+- `4` read permission
+- `7` all permissions
+```shell
+chomd 777 [filename]
+# full example `chmod u+w filename`
+
+u-r # remove read permission
+g+w # add group permission (primary group)
+o-x # remove execute permission for others
+```
 - read files current permission 
   - `ls -l`
