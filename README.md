@@ -272,5 +272,25 @@ Commands:
 - `groupadd`
 - `userdel`
 - `groupdel`
-### User Permissions <a id="users-permission-2"></a>
-Ownership & File Permissions
+## User Permissions <a id="users-permission-2"></a>
+### Ownership & File Permissions
+- print files in a long listing format to see all information
+  - `ls -l` this will give as an output `-rw-r--r--  1 bernhard  staff    790 Jul  9 18:08 README.md`
+    - explanation for output:
+      - `bernhard` is the owner
+      - `staff` is the primary group from that user
+- change ownership of file for user and group
+  - `chown [username]:[groupname] [filename]` we use the `primary group` from that user. example `sudo chown tom:admin test.txt`.
+- change ownership file for user
+  - `chown [usernmae] [filename]` when we only want to change the user, we don't need to provide the group.
+- change ownership of file for group
+  - `chrgp [groupname] [filename]`
+### File Permission
+We can see the current permissions when we run `ls -l`, this will give us the list of what are the owner, group and the permissions for the current file.
+```shell
+# output like this when we ran `ls -l`
+drwxr-xr-x  3 bernhard  staff     96 Jul  9 18:08 migrations
+```
+For this we use the `chmod` command.
+- read files current permission 
+  - `ls -l`
