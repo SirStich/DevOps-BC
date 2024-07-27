@@ -10,6 +10,7 @@
   - Permissions
     - [with Symbols](#lx-permission-sb)
     - [with octal numbers](#lx-permission-num) (preferred way)
+- [Basic Linux Commands - Pipes & Redirects](#basic-commands)
 
 
 
@@ -368,3 +369,42 @@ o-x # remove execute permission for others
 ```
 - read files current permission 
   - `ls -l`
+  
+---
+# Basic Linux Commands - Pipes & Redirects  <a id="basic-commands"></a>
+![img_4.png](img_4.png)
+### Standard I/O
+Every Program has 3 built-in streams:
+- STDIN (0) = Standard Input
+- STDOUT (1) = Standard Output
+- STDERR (2) = Standard Error
+![img_1.png](img_1.png)
+### Passing input to output
+![img_2.png](img_2.png)
+### Using `less` tool
+`'less' displays the contents of a file or a command output. One page at a time.`  
+Mostly used for opening large files, as less doesn't read the entire file, which results in faster load times.  
+We use the `pipe` command: `|`  
+Pipes the output of the previous command as an input to the next command  
+```shell
+cat /var/log/syslog | less
+```
+### Filter output - using `grep` tool
+We use `grep` for this  
+`grep` stands for Globally Search for Regular Expression and Print out.  
+Searches for a particular pattern of characters and displays all lines that contain that pattern.
+```shell
+history | grep [searchCriteria]
+# example
+history | grep sudo // this will search for any input with sudo
+# search for a sentence, we need " " quotes
+history | grep "sudo chmod"
+```
+### Redirects in Linux
+![img_3.png](img_3.png)
+We can take the output from the previous command and send it to a file
+```shell
+history | grep sudo > sudo-commands.txt # > will replace the content
+# if we want to append to the end of the file we use >>
+history | grep rm >> sudo-rm-commands.txt
+```
