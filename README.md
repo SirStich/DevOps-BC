@@ -11,6 +11,7 @@
     - [with Symbols](#lx-permission-sb)
     - [with octal numbers](#lx-permission-num) (preferred way)
 - [Basic Linux Commands - Pipes & Redirects](#basic-commands)
+- [Introduction to Shell Scripting](#sh-scripting)
 
 
 
@@ -408,3 +409,4 @@ history | grep sudo > sudo-commands.txt # > will replace the content
 # if we want to append to the end of the file we use >>
 history | grep rm >> sudo-rm-commands.txt
 ```
+# Introduction to Shell Scripting <a id="sh-scripting"></a>
