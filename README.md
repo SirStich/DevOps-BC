@@ -76,7 +76,7 @@ Contains files required for booting.
 ### `/etc`
 Here we can `read and write`.  
 Here is the system configuration stored and the main configuration location.  
-Like Network, Linux user data, passwords.
+Like Network, Linux user data, passwords, php config...
 
 ### `/dev`
 Location of device files, like webcam, keyboard, hard drives etc.
