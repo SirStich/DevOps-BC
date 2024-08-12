@@ -12,6 +12,7 @@
     - [with octal numbers](#lx-permission-num) (preferred way)
 - [Basic Linux Commands - Pipes & Redirects](#basic-commands)
 - [Introduction to Shell Scripting](#sh-scripting)
+  - [Variables](#sh-scripting-variables)
 
 
 
@@ -410,3 +411,106 @@ history | grep sudo > sudo-commands.txt # > will replace the content
 history | grep rm >> sudo-rm-commands.txt
 ```
 # Introduction to Shell Scripting <a id="sh-scripting"></a>
+Shell scripts have a `.sh` file extension
+### Shell vs. sh vs. Bash
+![img_5.png](img_5.png)
+![img_6.png](img_6.png)
+### Create a simple bash script
+```shell
+touch setup.sh
+```
+### `Shebang Line` - Tell the OS which shell it should execute
+![img_7.png](img_7.png)
+We have to write the `shebang` in the first line in our script.  
+The Shebang line points to the absolute path to the bash program.
+```shell
+# to check if the bash exists
+ls /bin | grep bash
+```
+### Execute Shell Script
+Before we can run the shell script, we have to change the `permission` of the file.
+Because by default, we don't have an execute permission.
+```shell
+# here we add the execute permission only for the current user.
+sudo chmod u+x setup.sh
+# check permission
+ls -l setup.sh
+# if the color of the file changed, this is now an executable
+# - execute setup.sh file
+./setup.sh # this is how we execute ANY shell script, no matter what syntax
+# or if we want to run this for bash specific
+bash setup.sh
+```
+### Shell Variables <a id="sh-scripting-variables"></a>
+- Define a variable
+  - `file_name=config.yaml` Here we assign the string config.yaml to file_name
+- Access variable
+  - `$file_name` We use the `$` sign
+- Store output of a command in a variable
+  - `variable_name=$(command)` We also can store the output from another command
+  
+
+#### Conditionals
+- if else
+```shell
+#!/bin/bash
+file_name=config.yaml
+
+if [ -d "config" ] # this will check if there is a directory named config
+then
+  echo "reading config directory contents"
+  config_files=$(ls config)
+else
+  echo "config dir not found. Creating one"
+  mkdir config
+fi # reverse of if, the program
+```
+#### File Test Operators & Permission Operators
+- `-b file` Checks if file is a block special file, if yes, then condition become true.
+- `-c file` Checks if file is a character special file; if yes, then the condition becomes true.
+- `-d file` Checks if file is a directory; if yes, then the condition becomes true.
+- `-f file` Checks if file is an ordinary file as opposed to a directory or special file; if yes, then the condition becomes true.
+- `-g file` Checks if file has its set group ID (SGID) bit set; if yes, then the condition becomes true.
+- `-k file` Checks if file has its sticky bit set; if yes, then the condition becomes true.
+- `-p file` Checks if file is a named pipe; if yes, then the condition becomes true.
+- `-t file` Checks if file descriptor is open and associated with a terminal; if yes, then the condition becomes true.
+- `-u file` Checks if file has its Set User ID (SUID) bit set; if yes, then the condition becomes true.
+- `-r file` Checks if file is readable; if yes, then the condition becomes true.
+- `-w file` Checks if file is writable; if yes, then the condition becomes true.
+- `-x file` Checks if file is executable; if yes, then the condition becomes true.
+- `-s file` Checks if file has size greater than 0; if yes, then the condition becomes true.
+
+#### Relational Operators - Works only for numeric values
+- `-eq` Checks if the value of two operands are equal or not; if yes, then the condition becomes true.
+- `-ne` Checks if the value of two operands are equal or not; if values are not equal, then the condition becomes true.
+- `-gt` Checks if the value of left operand is greater than the value of the right operand; if yes, then the condition becomes true.
+- `-lt` Checks if the value of left operand is less than the value of the right operand; if yes, then the condition becomes true.
+- `-ge` Checks if the value of left operand is greater than or equal to the value of the right operand; if yes, then the condition becomes true.
+- `-le` Checks if the value of left operand is less than or equal to the value of the right operand; if yes, then the condition becomes true.
+
+#### String Operators
+```shell
+#!/bin/bash
+echo "Setup and configure server"
+
+user_group="nana" 
+
+if [ "$user_group" == "nana" ]
+then
+	echo "configure the server"
+else
+	echo "No permission to configure server. wrong user group"
+fi
+
+```
+#### Positional Parameters
+When we want to run our script with some args, we can access them in order by using `$1`.
+```shell
+# access
+user_group=$1
+# calling script
+bash setup.sh admin # here admin is the parameter we want to access.
+```
+
+
+
