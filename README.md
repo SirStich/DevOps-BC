@@ -505,12 +505,79 @@ fi
 ```
 #### Positional Parameters
 When we want to run our script with some args, we can access them in order by using `$1`.
+Range is from `$1 - $9`
 ```shell
 # access
 user_group=$1
 # calling script
 bash setup.sh admin # here admin is the parameter we want to access.
 ```
+- Get all params
+  - `$*` With this we can get all the arguments as a single string
+- Get number of provided params
+  - `$#` We can get the total arguments, which the user entered
+- loop through all params
+```shell
+for param in $*
+  do
+    echo $param
+done
+```
+#### Read User Input
+- `-p` for prompt
+```shell
+#!/bin/bash
 
+read -p "Enter your password: " user_pwd
 
+echo "$user_pwd" 
+```
 
+#### While loop
+```shell
+sum=0
+while true
+do
+  read -p "enter a score " score
+  if [ "$score" == "q" ]; then
+      break
+  fi
+  sum=$(($sum+$score)) # for arithmetic operations, we use Double Parenthesis
+  echo "doing something"
+done
+```
+NOTE:
+Using Bash `[[` this is bash specific, which allows us to write our variables `without ""`.  
+
+#### Functions
+Without parameters
+```shell
+# definition
+function score_sum {
+  # logic
+}
+
+# calling func
+score_sum
+```
+With Parameters  
+- Note:
+  - Don't use more than 5 parameters
+```shell
+function create_file() {
+  file_name=$1 # access like args with $
+  is_shell_script=$2
+   touch $file_name
+   echo "file $file_name created"
+ 
+ if [ "$is_shell_script" = true ]; then
+     then
+       # current user can execute this file
+    chmod u+x $file_name
+    echo "added execute permission"
+ fi
+}
+
+# calling with params (must be done with space)
+create_file test.txt true
+```
