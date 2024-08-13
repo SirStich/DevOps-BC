@@ -581,3 +581,43 @@ function create_file() {
 # calling with params (must be done with space)
 create_file test.txt true
 ```
+#### function with Return value
+We can capture the returned value from the last command with `$?`
+```shell
+function sum() {
+  total=$(($1+$2))
+  return $total
+}
+# calling the func
+sum 2 10
+result=$? # we can capture the returned value from the sum function here with `$?`
+
+# or regular, like this
+result=$(sum 2 10)
+
+```
+#### Backup Script Example
+```shell
+# what to backup
+backups_files="/home/stich/myfolder"
+
+# where to backup to
+dest="/home/stich/backup"
+
+# create archive filename
+day=$(date +%A)
+hostname=$(hostname -s)
+archive_file="$hostname-$day.tgz"
+
+# print start status message
+echo "Backing up $backups_files to $dest/$archive_file"
+date
+echo
+
+# backup files using tar
+tar czf $dest/$archive_file $backups_files
+
+# print end status message
+echo
+echo "Backup finished"
+```
