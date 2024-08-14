@@ -13,6 +13,7 @@
 - [Basic Linux Commands - Pipes & Redirects](#basic-commands)
 - [Introduction to Shell Scripting](#sh-scripting)
   - [Variables](#sh-scripting-variables)
+- [Environment Variables](#env-variables)
 
 
 
@@ -621,3 +622,35 @@ tar czf $dest/$archive_file $backups_files
 echo
 echo "Backup finished"
 ```
+
+### Environment Variables <a id="env-variables"></a>
+Env variables are stored on the server. 
+> ⚠️ Note:  
+> When we `create` an env with `export` , this env variable is only alive `for current session` . When we close our terminal, the env variables are gone. ( ⚠️ Not persistent )
+
+#### Env Terminal Commands
+- Get all envs from current user
+  - `printenv`  
+- Show env value for specific key
+  - `printenv USER`
+  - or to get multiple `printenv | grep USER`  
+- Create an env key
+  - `export DB_USERNAME=dbuser` - this will work on all linux distros.  
+- Delete an env variable
+  - `unset KEY_NAME`
+### Persist env (user wide)
+  - go to `vim ~/.bashrc` file and add your env variables
+  - in the **.bashrc** file add your envs 
+    - `export DB_NAME=dbuser`
+  - reload required 
+    - back in the terminal, with `source ~/.bashrc` command. This will load the new env into the current session.
+
+### Persist env (system wide)
+
+
+This is not linux specific, it will work on all linux distros
+```shell
+export DB_USERNAME=dbuser # with export we want to store this in env
+```
+
+
