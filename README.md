@@ -14,6 +14,9 @@
 - [Introduction to Shell Scripting](#sh-scripting)
   - [Variables](#sh-scripting-variables)
 - [Environment Variables](#env-variables)
+- [Networking](#networking)
+- [SSH - Secure Shell](#ssh)
+  - [Demo - Connect via SSH (Digital Ocean)](#ssh-demo)
 
 
 
@@ -184,7 +187,8 @@ Everything in Linux is a file, if it is a document, pictures, directories, comma
 - logout current user
   - `exit` 
 ### Superuser
-- add user
+Use these commands when we are `not writing a script`. Use these `only` when you are just in the terminal.
+- add user 
   - `sudo adduser [name]`
 - add group
   - `1 sudo addgroup devops`
@@ -627,7 +631,9 @@ echo "Backup finished"
 Env variables are stored on the server. 
 > ⚠️ Note:  
 > When we `create` an env with `export` , this env variable is only alive `for current session` . When we close our terminal, the env variables are gone. ( ⚠️ Not persistent )
-
+#### PATH Environment Variable
+- List of directories to executable files, seperated by `:`
+- Tells the shell **which directories to search in for the executable**
 #### Env Terminal Commands
 - Get all envs from current user
   - `printenv`  
@@ -646,11 +652,104 @@ Env variables are stored on the server.
     - back in the terminal, with `source ~/.bashrc` command. This will load the new env into the current session.
 
 ### Persist env (system wide)
-
-
 This is not linux specific, it will work on all linux distros
 ```shell
 export DB_USERNAME=dbuser # with export we want to store this in env
 ```
+### Add a custom command / program (env) - PATH 
+When we want to add our custom program and make it executable like `ls` instead of writing the full path `/usr/bin/ls`. Thanks to the PATH variable, we don't need to provide the full path. Just calling the binary we want is enough.  
+#### Short Explanation
+- Every time we type in `ls`, it will look into the `PATH Variable` list of directories for the `ls commands binary file`.  
+---
+#### For our custom program
+When we create an executable program, and provide the path variable, with its location. We can run this binary from any location.
+This works because of `global env variables` -> `/etc/environment`   
+If we want to have this `specifically for the user`, we have to set a variable in `~/.bashrc`.  
+- Get the Global Path and append our path to it, to make a custom path
+  - `PATH=$PATH:/home/stich` - here we get the global path and append our users dir to it. (We don't need to `export` it, because the Path variable already exists, we just `modify the value`)
+```shell
+# .bashrc file
+# we use the global PATH from /etc/environment and append our location for the executable for it
+PATH=$PATH:/home/stich # here we should append the path, where the `welcome` executable is located
+# means the welcome script is in /home/stich located, adjust this accordingly to your location
+```
+---
+### Networking <a id="networking"></a>
+
+#### Networking Commands
+- `ifconfig`
+  - ip address
+  - subnet mask address
+  - gateway address (router ip address)
+- `netstat`
+  - what active connections we have on our machine (which apps are listening active on a specific port)
+- `ps aux`
+  - current running apps and processes
+- `nslookup`
+  - get ip address of any domain name
+    - example `nslookup google.com`
+- `ping`
+  - check if service or application is accessible
+    - example `ping google.com` 
+
+### SSH - Secure Shell <a id="ssh"></a>
+#### What is SSH?
+SSH is a network protocol that gives users a secure way to access a computer over the internet.  
+
+#### Use cases for ssh:
+- Copy File to remote server
+- Install software on new server
+
+#### Connect to Server over the internet
+There are **two** possible ways of connecting to the remote server.  
+1. Using Password Authentication.
+   - Username and Password is configured `on server`.
+   - User can then connect with username and password.
+2. Using SSH Keys
+   - The **public key** is installed on the remote server.
+   - How to create SSH Key Pair (Public + Private Key)
+     1. **Each Client** creates SSH Key Pair on their local machine.
+     2. **Private Key** = Secret Key. Is stored securely on the client machine.
+     3. **Public Key** = Can be shared, with remote server.
+     4. **Admin of Remote Server** can add the public ssh keys for all team members on the remote server.
+        1. **Remote Server**: Add **public** key to **authorized_keys** on application server.
+        2. Default Port for SSH is **Port 22**  
+
+#### Demo - Connect to Remote Server via SSH <a id="ssh-demo"></a>
+1. Create a Remote Server on Cloud Platform
+2. Generate SSH Key Pair on local machine
+3. Copy Bash Script File to Remote Server
+4. Execute Script file on Remote Server
+#### Create Droplet 
+- Create a Droplet
+- Choose Ubuntu OS
+- Choose Smallest CPU and Disk
+- Authentication -> Password (we have to use this before we can connect to SSH)
+##### Connect to Remote Server (Create SSH Key Pair)
+- We can connect to the remote server with the `ipv4` from Droplet, this will be the public address from where we can access this server.  
+In the terminal on our machine:
+```shell
+pwd /home/stich
+ls .ssh/
+ssh-keygen -t rsa 
+# the `-t` flag means use the rsa crypto algorithm
+cat .ssh/id_rsa.pub # this is the key we have to put onto the remote server
+```
+On the remote server:
+- if there is no `.ssh` folder, we have to create it on the `remote server` 
+- Add `public key` to location on server `~/.ssh/authorized_keys`
+  - using vim `vim .ssh/authorized_keys`
+- in `known_host` is the remote server saved on the client machine  
+
+##### Copy Bash Script & execute
+To copy a file to our remote server, we use `scp` command.
+```shell
+scp test.sh root@64.255.108.123:/root # this takes the private key as an argument
+# if we want to use a specific private key
+scp -i .ssh/id_rsa test.sh root@64.255.108.123:/root
 
 
+# while connected on the remote server
+ls -l # check file permission 
+chmod u+x test.sh # add execute permission
+```
