@@ -872,3 +872,13 @@ Characteristics
 - Similar to document-orientated database
 
 # Build and Package Manager Tools <a id="bpm-tools"></a>
+The Application needs to be deployed on a production server.  
+For that, we want to **package** application into a **single moveable file (artifact), also called "building the code"**.  
+This is what a build tool or package manager tool does.
+### What is an "artifact"?
+Includes application code and all its dependencies.
+
+### What does "building the code" mean?
+- **Compiling** the code
+- **Compressing** the code
+- Package hundred of files **to 1 single file**
