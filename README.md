@@ -17,6 +17,9 @@
 - [Networking](#networking)
 - [SSH - Secure Shell](#ssh)
   - [Demo - Connect via SSH (Digital Ocean)](#ssh-demo)
+- [Databases](#db)
+  - [Databases](#db-types)
+- [What are Build and Package Manager Tools?](#bpm-tools)
 
 
 
@@ -753,3 +756,119 @@ scp -i .ssh/id_rsa test.sh root@64.255.108.123:/root
 ls -l # check file permission 
 chmod u+x test.sh # add execute permission
 ```
+
+# Databases <a id="db"></a>
+Databases are used to persist data.
+### Database for local development
+- Connect to a dev database to develop the new features
+- Connect to a test db to test the new feature with realistic data  
+### 2 ways for developers to work wit DB
+Option 1:
+- Each dev installs DB locally
+- Each dev has **own DB with own test data**
+Option 2:
+- Shared DB **hosted remotely**
+
+### Configure Database Connection
+The DB Connection is configured in the applications code.  
+Each programming language has a lib/module for DB Connection.  
+Define in 1 place as environment variables
+Configure DB connection from **outside**
+- Set entpoint and credentials from outside for each environment.
+- Depending on env (dev, test, prod) connects to different DB!
+### Pass Env Variables on application Startup
+- Either from CLI
+- Configure in code editor
+- use properties/configuration files
+**The best option is to pass them via properties or configuration file**
+### Configuration File Example:
+```json
+{
+  "dev": {
+    "mongodb": {
+      "host": "localhost",
+      "port": "27017",
+      "database": "db-name"
+    }
+  },
+  "staging": {
+    "mongodb": {
+      "host": "mongo-host-staging",
+      "port": "27017",
+      "database": "staging-db-name"
+    }
+  },
+  "prod": {
+    "mongodb": {
+      "host": "mongo-host-prod",
+      "port": "27017",
+      "database": "prod-db-name"
+    }
+  }
+}
+```
+### Databases in Production
+- Application connects to db.
+- DB must be available, when application starts
+- **Before** app is deployed, we need to **install and configure database**
+**Data is important so we need to secure them**:
+- Replicate db
+- Do regular backups
+- Make sure it performs under high load  
+
+## Database Types <a id="db-types"></a>
+### Key Value DB
+Don't use this as a primary DB
+Characteristics
+- Data is saved in key-value pairs
+- unique key
+- no joins
+- in-memory
+Best for:
+- Caching
+- Message Queue
+
+### Wide Column DB
+Don't use this as a primary DB
+Characteristics
+- two-dimensional key-value store
+- Data is saved in tables, rows and columns
+- Names and format can vary from row to row (Schema-less)
+  Best for:
+- Time Series
+- IoT Records
+### Document DB
+Characteristics
+- Data is stored in a JSON-like documents
+- Schema-less
+- no joins
+- Denormalized
+  Best for:
+- Mobile Apps
+- Game Apps
+- CMS
+- Most Apps
+### Relation DB
+Characteristics
+- Data is stored in Tables, Rows and Columns
+- Schema (schema and data types need to be created first)
+- Normalized to avoid duplicated data
+- Most used in industry
+  Best for:
+- Structured data
+### Graph DB
+Characteristics
+- Data is stored as Nodes and Relationships instead of tables or documents
+- Directly connect Entities
+- Edges are Relationships
+  Best for:
+- Graphs
+- Patterns
+### Search Engine DB
+Characteristics
+- Dedicated to the search of data
+- Optimized for dealing with data
+- Full-text search in efficient and fast way
+- Similar to document-orientated database
+
+# Build and Package Manager Tools <a id="bpm-tools"></a>
