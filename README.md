@@ -20,6 +20,7 @@
 - [Databases](#db)
   - [Databases](#db-types)
 - [What are Build and Package Manager Tools?](#bpm-tools)
+- [IaaS (Infrastructure as a Service)](#IaaS-tools)
 
 
 
@@ -882,3 +883,7 @@ Includes application code and all its dependencies.
 - **Compiling** the code
 - **Compressing** the code
 - Package hundred of files **to 1 single file**
+
+# IaaS <a id="IaaS"></a>
+### What do we need on our servers?
+- Jenkins on Server for CI/CD
