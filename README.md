@@ -21,6 +21,7 @@
   - [Databases](#db-types)
 - [What are Build and Package Manager Tools?](#bpm-tools)
 - [IaaS (Infrastructure as a Service)](#IaaS-tools)
+- [Docker](#docker)
 
 
 
@@ -887,3 +888,30 @@ Includes application code and all its dependencies.
 # IaaS <a id="IaaS"></a>
 ### What do we need on our servers?
 - Jenkins on Server for CI/CD
+
+# Docker <a id="docker"></a>
+### Docker Main Commands
+- list all images
+  - `docker images`
+- start a container
+  - `docker run [imageName]` docker run redis - this will start the image in a container
+  - docker run - pulls image and starts container
+  - run on specific port
+    - `docker run -p [host:container] [imageName]` docker run -p 6000:6379 redis
+- start a container in detached mode
+  - `docker run -d redis`
+- list running containers
+  - `docker ps`
+- stop running container
+  - `docker stop [containerId]`
+- list running and stopped containers
+  - `docker ps -a`
+
+### Docker Debug Commands
+- show container logs
+  - `docker logs [containerId]`
+- get the terminal of a running container
+  - `docker exec -it [containerName] sh`
+    - print env variables
+      - `env` - inside the terminal
+
