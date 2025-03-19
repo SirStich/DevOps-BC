@@ -197,6 +197,8 @@ Use these commands when we are `not writing a script`. Use these `only` when you
   - `sudo adduser [name]`
 - add group
   - `1 sudo addgroup devops`
+- add user to group
+  - `adduser [username] [groupname]` example `adduser tom devops`
 ---
 
 # Package Manager <a id="manager"></a>
